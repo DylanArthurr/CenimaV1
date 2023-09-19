@@ -37,8 +37,11 @@ namespace CinemaTicketBooking
             }
         }
 
-        public List<Movie> movies= new List<Movie>();   
-        public  void SellTickets()
+        public List<Movie> movies= new List<Movie>();
+
+        public int TicketsSold { get; private set; }
+
+        public  void SellTickets(List<Movie> movies)
         {
             int movieIndex = -1;
             int quantity  = 0;
