@@ -1,6 +1,6 @@
 ﻿namespace CinemaTicketBooking
 {
-    class Movie
+    public class Movie
     {
         public string Title { get; set; }
         public int TicketsSold { get; set; }
@@ -11,7 +11,7 @@
             TicketsSold = 0;
         }
 
-        public void SellTickets()
+        public void SellTickets(int q)
         {
 
         }
