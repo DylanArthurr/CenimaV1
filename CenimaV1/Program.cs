@@ -4,29 +4,29 @@ using System.IO;
 
 namespace CinemaTicketBooking
 {
- 
+
 
     class Program
     {
-        static List<Movie> Movies= new List<Movie>();
+        static List<Movie> Movies = new List<Movie>();
 
         static void Main(string[] args)
         {
             loadUpMovies();
             welcomeMenu();
-           Movie MovieChosen = movieChoice();
+            Movie MovieChosen = movieChoice();
 
 
         }
 
         public static void loadUpMovies()
-        { 
+        {
             Movies.Add(new Movie("Rush", "15"));
             Movies.Add(new Movie("How I Live Now", "15"));
             Movies.Add(new Movie("Thor: The Dark World", "12"));
             Movies.Add(new Movie("Filth", "18"));
             Movies.Add(new Movie("Planes", "u"));
-          
+
 
         }
         public static Movie movieChoice()
@@ -35,14 +35,16 @@ namespace CinemaTicketBooking
             int m = 1;
             foreach (Movie movie in Movies)
             {
-                Console.WriteLine(m+": "+movie.Title + " (" + movie.Rating + ") ");
+                Console.WriteLine(m + ": " + movie.Title + " (" + movie.Rating + ") ");
                 m++;
             }
             int userMovieChoice = Convert.ToInt32(Console.ReadLine());
 
-            if (userMovieChoice <1 || userMovieChoice>Movies.Count)
+            while (userMovieChoice < 1 || userMovieChoice > Movies.Count)
             {
                 Console.WriteLine("This Movie Doesnt Exitst");
+                Console.WriteLine("Please Enter Another Number: ");
+                userMovieChoice = Convert.ToInt32(Console.ReadLine());
             }
             return Movies[userMovieChoice - 1];
         }
@@ -50,7 +52,7 @@ namespace CinemaTicketBooking
         {
             Console.WriteLine("Welcome to Aquinas Multiplex");
             Console.WriteLine("We are presently showing:");
-           
+
         }
         public static int userAge(string Rating)
         {
