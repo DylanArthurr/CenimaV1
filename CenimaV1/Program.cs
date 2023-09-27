@@ -11,11 +11,11 @@ namespace CinemaTicketBooking
         static List<Movie> Movies = new List<Movie>();
 
         static void Main(string[] args)
-        {           
+        {
             welcomeMenu();
             Movie MovieChosen = movieChoice();
-            int ageRating = userAge(MovieChosen.Rating);
-            DateTime selectedDate = dateChoice(Movie movie);
+            int ageRating = userAge(MovieChosen.Rating, MovieChosen);
+
             Console.ReadLine();
 
         }
@@ -39,7 +39,7 @@ namespace CinemaTicketBooking
                 Console.WriteLine(m + ": " + movie.Title + " (" + movie.Rating + ") ");
                 m++;
             }
-            if(int.TryParse(Console.ReadLine(), out int userMovieChoice))
+            if (int.TryParse(Console.ReadLine(), out int userMovieChoice))
             {
                 while (userMovieChoice < 1 || userMovieChoice > Movies.Count)
                 {
@@ -49,11 +49,11 @@ namespace CinemaTicketBooking
                 }
 
             }
-            else             
+            else
             {
-                
+
                 Console.WriteLine("Error! Please Enter Movie Selection In Numbers: ");
-                
+
                 userMovieChoice = Convert.ToInt32(Console.ReadLine());
                 Console.Clear();
             }
@@ -66,73 +66,97 @@ namespace CinemaTicketBooking
             loadUpMovies();
 
         }
-        public static int userAge(string Rating)
+        public static int userAge(string Rating, Movie MovieChosen)
         {
             int ageRating = 0;
+
             Console.WriteLine("Please Enter Your Age");
+
+
+
+            switch (Rating)
+            {
+                case "U":
+                    ageRating = 0;
+                    break;
+                case "15":
+                    ageRating = 15;
+                    break;
+                case "12":
+                    ageRating = 12;
+                    break;
+                case "18":
+                    ageRating = 18;
+                    break;
+
+            }
 
             while (true)
             {
-
                 if (int.TryParse(Console.ReadLine(), out int age))
+                {
+                    Console.Clear();
 
-                    switch (Rating)
+                    if (age < ageRating)
                     {
-                        case "U":
-                            ageRating = 0;
-                            break;
-                        case "15":
-                            ageRating = 15;
-                            break;
-                        case "12":
-                            ageRating = 12;
-                            break;
-                        case "18":
-                            ageRating = 18;
-                            break;
+                        Console.WriteLine("Access Denied - Too young");
+                        return age;
 
                     }
+                    else if (age >= ageRating)
+                    {
+                        Console.WriteLine("Access Granted");
+                        DateTime selectedDate = dateChoice(MovieChosen);
+                        return age;
 
-
-
-                if (age < ageRating)
-                {
-                    Console.WriteLine("Access Denied - Too young");
-                    
-                }
-                else if (age >= ageRating)
-                {
-                    Console.WriteLine("Access Granted");
-                    DateTime selectedDate = dateChoice(Movie movie);
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Error! Please Enter Age In Numbers!");                  
+                    Console.WriteLine("Error! Please Enter Age In Numbers: ");
                     Console.Clear();
+
                 }
-                return age;
-
-
-
-
-
             }
+
+
+
 
 
         }
 
         public static DateTime dateChoice(Movie movie)
         {
-            Console.WriteLine("Please Enter The Date: ");
+            Console.WriteLine("Please Enter The Date (yyyy-MM-dd, within the next week): ");
             DateTime selectedDate;
+            DateTime selectedTime;
+            DateTime currentDate = DateTime.Now;
+            DateTime maxDate = currentDate.AddDays(7); // Maximum date allowed is 7 days in the future
 
             while (true)
             {
                 if (DateTime.TryParseExact(Console.ReadLine(), "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out selectedDate))
                 {
-                    Console.Clear();
-                    Console.WriteLine($"--------------------\r\nAquinas Multiplex\r\nFilm : {movie.Title}\r\nDate : {selectedDate}\r\nEnjoy the film\r\n--------------------");
-                    break;
+                    if (selectedDate >= currentDate && selectedDate <= maxDate)
+                    {
+                        Console.WriteLine("Please Enter Time (hh:mm): ");
+                        if (DateTime.TryParseExact(Console.ReadLine(), "HH:mm", null, System.Globalization.DateTimeStyles.None, out selectedTime))
+                        {
+                            Console.Clear();
+                            Console.WriteLine($"--------------------\r\nAquinas Multiplex\r\nFilm : {movie.Title}\r\nDate : {selectedDate:yyyy-MM-dd} {selectedTime:HH:mm}\r\nRating : {movie.Rating}\r\nEnjoy the film!\r\n--------------------");
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid Time");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid date. Please enter a date within the next week.");
+                    }
+
+
                 }
                 else
                 {
@@ -141,8 +165,9 @@ namespace CinemaTicketBooking
             }
 
             return selectedDate;
-
         }
+
+
 
 
         public class Movie
