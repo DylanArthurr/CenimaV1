@@ -7,9 +7,10 @@ namespace CinemaTicketBooking
     {
         public static void welcomeMenu()
         {
+            // prints the first thing the user sees
             Console.WriteLine("Welcome to Aquinas Multiplex");
             Console.WriteLine("We are presently showing:");
-            Movie.loadUpMovies();
+            
         }
     }
 }

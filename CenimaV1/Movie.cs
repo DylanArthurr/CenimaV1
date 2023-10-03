@@ -9,9 +9,19 @@ namespace CinemaTicketBooking
         public string Rating = "";
         public int Tickets = 0;
 
-        public static void loadUpMovies()
+        public int TicketsSold {  get; set; }
+
+        public static int TicketsSold(Movie MovieChosen)
         {
-            Program.Movies.Add(new Movie("Rush", "15"));
+            // takes the movie chosen and adds a ticket sold
+            MovieChosen.TicketsSold++;
+            // retunrs amount of tickets sold
+            return MovieChosen.TicketsSold;
+        }
+        public static void loadUpMovies(int TicketsSold)
+        {
+            // Add all these movies to the Movie list
+            Program.Movies.Add(new Movie("Rush", "15", "Tickets Sold: " + TicketsSold));
             Program.Movies.Add(new Movie("How I Live Now", "15"));
             Program.Movies.Add(new Movie("Thor: The Dark World", "12"));
             Program.Movies.Add(new Movie("Filth", "18"));
@@ -21,15 +31,20 @@ namespace CinemaTicketBooking
         }
         public static Movie movieChoice()
         {
+        
             Console.WriteLine("Choose Movie You Would Like To See");
             int m = 1;
+            // Goes through the movie list 
             foreach (Movie movie in Program.Movies)
             {
+                //Prints all the movies
                 Console.WriteLine(m + ": " + movie.Title + " (" + movie.Rating + ") ");
                 m++;
             }
+            // takes the users input and assignes it to userMovieChoise
             if (int.TryParse(Console.ReadLine(), out int userMovieChoice))
             {
+                //While the user enters the wrong number allow them to enter another
                 while (userMovieChoice < 1 || userMovieChoice > Program.Movies.Count)
                 {
                     Console.WriteLine("This Movie Doesnt Exitst");
@@ -40,12 +55,14 @@ namespace CinemaTicketBooking
             }
             else
             {
-
+                //if the input isnt an integer 
                 Console.WriteLine("Error! Please Enter Movie Selection In Numbers: ");
-
+                // Takes users input again converting it into an int
                 userMovieChoice = Convert.ToInt32(Console.ReadLine());
+                // clears console to keep clean
                 Console.Clear();
             }
+
             return Program.Movies[userMovieChoice - 1];
         }
 
