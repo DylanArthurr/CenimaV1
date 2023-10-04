@@ -11,17 +11,11 @@ namespace CinemaTicketBooking
 
         public int TicketsSold {  get; set; }
 
-        public static int TicketsSold(Movie MovieChosen)
-        {
-            // takes the movie chosen and adds a ticket sold
-            MovieChosen.TicketsSold++;
-            // retunrs amount of tickets sold
-            return MovieChosen.TicketsSold;
-        }
-        public static void loadUpMovies(int TicketsSold)
+
+        public static void loadUpMovies()
         {
             // Add all these movies to the Movie list
-            Program.Movies.Add(new Movie("Rush", "15", "Tickets Sold: " + TicketsSold));
+            Program.Movies.Add(new Movie("Rush", "15"));
             Program.Movies.Add(new Movie("How I Live Now", "15"));
             Program.Movies.Add(new Movie("Thor: The Dark World", "12"));
             Program.Movies.Add(new Movie("Filth", "18"));

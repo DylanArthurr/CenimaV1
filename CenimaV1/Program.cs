@@ -24,8 +24,8 @@ namespace CinemaTicketBooking
                 Welcome.welcomeMenu();
                 // user chooses movie
                 Movie MovieChosen = Movie.movieChoice();
-                // Tickets sold is accounted for
-                TicketSystem.TicketsSold(MovieChosen);
+                
+                
                 // Age is checked
                 int ageRating = UserAge.userAge(MovieChosen.Rating, MovieChosen);
                 // Date and time of the movie is selected
